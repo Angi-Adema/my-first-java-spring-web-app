@@ -34,4 +34,20 @@ public class SayHelloController {
 
 		return sb.toString();
 	}
+	
+	//Since the above code is extremely tedious and not scalable over time, we create a view using the Spring JSP. Java Server Pages
+	//Create a file called sayHello.jsp below. Can have multiple JSPs in here:
+	// /src/main/resources/META-INF/resources/WEB-INF/jsp/sayHello.jsp
+	// /src/main/resources/META-INF/resources/WEB-INF/jsp/welcome.jsp
+	// /src/main/resources/META-INF/resources/WEB-INF/jsp/login.jsp
+	// /src/main/resources/META-INF/resources/WEB-INF/jsp/todos.jsp
+	//When a user hits the URL "say-hello-jsp" we want them to be redirected to sayHello.jsp containing the HTML info above.
+	
+	@RequestMapping("say-hello-jsp")
+	// @ResponseBody  for jsp, we are mapping to the view jsp files so we do not want the response body any longer. This was to render the hard coded HTML above.
+	public String sayHelloJsp() {
+		//We do not want to return text as it will render exactly the text as it is in here.
+		return "sayHello";  // The name of the JSP.
+	}
+	
 }

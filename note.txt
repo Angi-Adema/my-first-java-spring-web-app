@@ -1,0 +1,29 @@
+# Getting Started
+
+## HTML
+
+<html>
+	
+	<head>
+		<title> My first HTML Page </title>
+	</head>
+	
+	<body>
+		My first html page with body
+	</body>
+	
+</html>
+
+## JSP
+
+## In order to utilize JSP, you have to create a specific folder defined by Spring Boot for all the JSP. We have part of the structure already created here in this text file for the JSP file.
+/src/main/resources/META-INF/resources/WEB-INF/jsp/sayHello.jsp
+sayHello.jsp  -  Where the HTML code is stored.  Much easier to make changes in a jsp file rather than in the Java code.
+
+## What we are doing? We are sending a request to /say-hello-jsp which is being handled by the SayHelloController and inside this controller the sayHelloJsp method is handling this request
+returning back the name of the jsp or "sayHello". What is the MVC doing? It is making use of view resolver. The view resolver is configured in the application.properties file where we define
+the prefix and the suffix. The request is created and redirected to the specific jsp. /WEB-INF/jsp/sayHello.jsp
+
+## Create a Login JSP
+
+/login => com.in28minutes.springboot.myfirstwebapp.login.LoginController => login.jsp

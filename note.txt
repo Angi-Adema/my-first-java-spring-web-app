@@ -27,3 +27,20 @@ the prefix and the suffix. The request is created and redirected to the specific
 ## Create a Login JSP
 
 /login => com.in28minutes.springboot.myfirstwebapp.login.LoginController => login.jsp
+
+## HTTP request comes in and is handled by the Front Controller to be sent to the correct controller which identifies the view by name then is returned to the Front Controller and response 
+is then returned. Lets say we go into the browser and type in the URL: localhost:8080/login.
+
+B1: Identifies correct Controller method
+- Dispatcher server first needs to identify the right controller method. It see the URL with /login.
+- Passes this request to the login controller. /login => LoginController.loginPage
+
+B2: Executes Controller method
+- Executes .loginPage. Whatever data is needed it puts it into the model and returns the view name of login.
+
+B3: Identifies correct View
+- Dispatcher now has login but it doesn't know where the login view is. Makes use of the View Resolver.
+- Login will be mapped to: /WEB-INF/jsp/login.jsp
+
+B4: Executes View
+- Now the dispatcher servlet has the right view name, executes the view, the view will be whatever is in the mapped JSP file and sent back as a response to the browser.

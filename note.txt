@@ -44,3 +44,22 @@ B3: Identifies correct View
 
 B4: Executes View
 - Now the dispatcher servlet has the right view name, executes the view, the view will be whatever is in the mapped JSP file and sent back as a response to the browser.
+
+## Create a bean for our TODOs.
+
+We will need:
+id
+username
+description of TODO
+targetDate
+completed
+
+Create a Java class to store these details. What do we need?
+-Create a TodoController
+-listTodos.jsp
+
+## Understand Request vs Model vs Session
+- When a Request is sent through, the information that went with that request is only available for that request. If we then go to a different page, example from login to the TODOs page, all the information
+in that original Request sent for the login is lost and only the information for the TODOs page will show in DevTools.
+- Whenever you put something in a model, it is only available by default for that request and does not persist to other requests. Example, name shows on welcome page but is not carried to the TODOs page.
+- In order to pass info to other screens, we need to put it into Session rather than in the Request or the Model.

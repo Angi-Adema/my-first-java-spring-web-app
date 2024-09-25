@@ -7,8 +7,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+// In order to put an attribute into session, we use @SessionAttributes and specify what we are wanting to put into Session. In this case "name". We see it put into the model below, we also need to add
+// this to all the controllers where we want to make use of that value. (Store a value in session and use it so it persists across multiple pages or HTTP requests.)
+@SessionAttributes("name")
 public class LoginController {
 	
 	// Make use of our AuthenticationService. There is an error when we try to run the page because this is not initialized and is returning null.

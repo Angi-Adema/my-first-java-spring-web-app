@@ -10,7 +10,7 @@
 		<!--<div>Your Password: ${password}</div>  We decided not to include the password info on the welcome page-->
 		
 		<!-- Got rid of the div around this a tag as it is now managed by Spring and bootstrap. -->
-		<a href="list-todos">Manage</a> your todos
+		<a href="list-todos">Manage</a> your TODOs
 
 	</div>
 </body>

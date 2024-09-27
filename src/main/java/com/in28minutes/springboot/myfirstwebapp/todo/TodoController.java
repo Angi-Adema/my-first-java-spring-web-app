@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -26,5 +27,20 @@ public class TodoController {
 		model.addAttribute("todos", todos);
 		
 		return "listTodos";
+	}
+	
+	// Add the functionality to the "Add TODO" button with this method below.
+	// This method is handling the GET, POST, etc. any request type. To have it handle separately the GET and POST functions, we add a request method using "value" & "method below.
+	@RequestMapping(value="add-todo", method = RequestMethod.GET)
+	public String showNewTodoPage() {
+		return "todo";
+	}
+	
+	// Add the POST method.
+	// We want to also redirect to the listTodos above rather than copying all the code from above and putting it into this method.
+	@RequestMapping(value="add-todo", method = RequestMethod.POST)
+	// Use @RequestParam to capture the data entered for the TODO and store it and move all the logic out to the TodoService in the TodoController.
+	public String addNewTodo(@RequestParam String description) {
+		return "redirect:list-todos";
 	}
 }

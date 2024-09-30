@@ -20,6 +20,8 @@
 			<!-- Create variables for done and id. -->
 			<form:input type="hidden" path="id"/>
 			<form:input type="hidden" path="done"/>
+			<!-- Handle any errors from validation. -->
+			<form:errors path="description" cssClass="text-warning"/>
 			<input type="submit" class="btn btn-success"/>
 		</form:form>
 	</div>

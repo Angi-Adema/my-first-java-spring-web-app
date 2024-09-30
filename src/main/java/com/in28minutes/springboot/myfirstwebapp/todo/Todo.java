@@ -2,6 +2,8 @@ package com.in28minutes.springboot.myfirstwebapp.todo;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Size;
+
 // Where do we store these details? In a database. We will need to create a database.
 // First create a static list of TODOs (TodoService class). Then utilize a database (H2, MySQL)
 
@@ -15,6 +17,10 @@ public class Todo {
 
 	private int id;
 	private String username;
+	
+	// Set validation on the description and produce message when the data entered fails this parameter. From Jakarta.validation-api, 
+	//can see all of the things we can use in here by opening this file in Maven dependencies.
+	@Size(min=10, message="Enter at least 10 characters.")
 	private String description;
 	private LocalDate targetDate;
 	private boolean done;

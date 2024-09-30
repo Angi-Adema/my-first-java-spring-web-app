@@ -12,7 +12,7 @@
 		<h1>Enter TODO Details</h1>
 		<!-- We need to use a form to capture the detail of the TODO to be entered in here. -->
 		<form method="post">
-			Description: <input type="text" name="description"/>
+			Description: <input type="text" name="description" required="required"/>
 			<input type="submit" class="btn btn-success"/>
 		</form>
 	</div>

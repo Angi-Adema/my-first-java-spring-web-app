@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.validation.Valid;
+
 @Service
 public class TodoService {
 	// Create list of TODOs.
@@ -15,7 +17,7 @@ public class TodoService {
 	private static int todosCount = 0;
 	
 	static {
-		todos.add(new Todo(++todosCount, "in28minutes", "Learn AWS", LocalDate.now().plusYears(1), false));
+		todos.add(new Todo(++todosCount, "in28minutes", "Get AWS Certified", LocalDate.now().plusYears(1), false));
 		todos.add(new Todo(++todosCount, "in28minutes", "Learn DevOps", LocalDate.now().plusYears(2), false));
 		todos.add(new Todo(++todosCount, "in28minutes", "Learn CloudDevelopment", LocalDate.now().plusYears(3), false));
 	}
@@ -34,5 +36,18 @@ public class TodoService {
 		// Use lambda expression: name of the bean -> condition you want to check. (todo -> todo.getId() == id)
 		Predicate<? super Todo> predicate = todo -> todo.getId() == id;
 		todos.removeIf(predicate);
+	}
+
+	public Todo findById(int id) {
+		Predicate<? super Todo> predicate = todo -> todo.getId() == id;
+		// We want one by one check all the TODOs, can either use a loop or can use funtional programming and utilize a stream.
+		Todo todo = todos.stream().filter(predicate).findFirst().get();
+		return todo;
+	}
+
+	// Here we delete an existing value from the list and add the new value.
+	public void updateTodo(@Valid Todo todo) {
+		deleteById(todo.getId());
+		todos.add(todo);
 	}
 }

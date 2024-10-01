@@ -35,7 +35,7 @@ public class TodoController {
 	}
 	
 	// Add the functionality to the "Add TODO" button with this method below.
-	// This method is handling the GET, POST, etc. any request type. To have it handle separately the GET and POST functions, we add a request method using "value" & "method below.
+	// This method is handling the GET, POST, etc. any request type. To have it handle separately the GET and POST functions, we add a request method using "value" & "method" below.
 	// Since we are using form library, we have to update this method to send the attribute call into the model instead of directing the page. Added the model into the showNewTodoPage method call.
 	@RequestMapping(value="add-todo", method = RequestMethod.GET)
 	public String showNewTodoPage(ModelMap model) {
@@ -57,13 +57,13 @@ public class TodoController {
 	// Use @RequestParam to capture the data entered for the TODO and store it and move all the logic out to the TodoService in the TodoController.
 	public String addNewTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
 		
-		// If the page result has errors, do NOT got to the list-todos page, rather go back to the todo page.
+		// If the page result has errors, do NOT go to the list-todos page, rather go back to the todo page.
 		if(result.hasErrors()) {
 			return "todo";
 		}
 		
 		String username = (String)model.get("name");
-		todoService.addTodo(username, todo.getDescription(), LocalDate.now().plusYears(1), false);
+		todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);   // Removed "LocalDate.now().plusYears(1)" as we do not want to hard code the date, instead pick up user input.
 		return "redirect:list-todos";
 	}
 	
@@ -75,5 +75,31 @@ public class TodoController {
 		
 		return "redirect:list-todos";
 		
+	}
+	
+	// This method brings the user to a page to allow them to update the TODO but is a GET request rather than a POST request that updates the actual TODOs list.
+	@RequestMapping(value="update-todo", method = RequestMethod.GET)
+	public String showUpdateTodoPage(@RequestParam int id, ModelMap model) {
+		Todo todo = todoService.findById(id);
+		// Now we need to add this to the model, name should match the name given in the todo.jsp.
+		model.addAttribute("todo", todo);
+		return "todo";
+		
+	}
+	
+	// POST request to update the TODOs list.
+	@RequestMapping(value="update-todo", method = RequestMethod.POST)
+	// Use @RequestParam to capture the data entered for the TODO and store it and move all the logic out to the TodoService in the TodoController.
+	public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
+		
+		// If the page result has errors, do NOT go to the list-todos page, rather go back to the todo page.
+		if(result.hasErrors()) {
+			return "todo";
+		}
+		
+		String username = (String)model.get("name");
+		todo.setUsername(username);
+		todoService.updateTodo(todo);
+		return "redirect:list-todos";
 	}
 }

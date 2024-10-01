@@ -13,7 +13,7 @@ public class Todo {
 	// username
 	// description of TODO
 	// targetDate
-	// completed
+	// whether completed
 
 	private int id;
 	private String username;

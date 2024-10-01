@@ -27,7 +27,7 @@ public class LoginController {
 	}
 
 	//login
-	// This method is handling both the GET and POST requests.
+	// To start, this method is handling both the GET and POST requests.
 	@RequestMapping(value="login", method = RequestMethod.GET)   // To make this only handle the GET request, we added value= and the , method = RequestMethod.GET. For the POST we add the method below.
 	public String loginPage() {
 		

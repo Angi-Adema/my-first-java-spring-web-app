@@ -3,6 +3,8 @@ package com.in28minutes.springboot.myfirstwebapp.todo;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,7 +30,8 @@ public class TodoController {
 	// URL we want to use for the TODOs is /list-todos
 	@RequestMapping("list-todos")
 	public String listAllTodos(ModelMap model) {
-		List<Todo> todos = todoService.findByUsername("in28minutes");
+		String username = getLoggedInUsername(model);  // To remove the hardcoding of the username "in28minutes" we have to get the input name from the model and insert it here.
+		List<Todo> todos = todoService.findByUsername(username);  // Instead of List<todo> todos = todoService.findByUsername("in28minutes").
 		model.addAttribute("todos", todos);
 		
 		return "listTodos";
@@ -39,7 +42,7 @@ public class TodoController {
 	// Since we are using form library, we have to update this method to send the attribute call into the model instead of directing the page. Added the model into the showNewTodoPage method call.
 	@RequestMapping(value="add-todo", method = RequestMethod.GET)
 	public String showNewTodoPage(ModelMap model) {
-		String username = (String)model.get("name");
+		String username = getLoggedInUsername(model);
 		Todo todo = new Todo(0, username, "", LocalDate.now().plusYears(1), false);
 		// Put this Bean into model (copy model attribute name from todo.jsp).
 		model.put("todo", todo);
@@ -62,7 +65,7 @@ public class TodoController {
 			return "todo";
 		}
 		
-		String username = (String)model.get("name");
+		String username = getLoggedInUsername(model);
 		todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);   // Removed "LocalDate.now().plusYears(1)" as we do not want to hard code the date, instead pick up user input.
 		return "redirect:list-todos";
 	}
@@ -97,9 +100,18 @@ public class TodoController {
 			return "todo";
 		}
 		
-		String username = (String)model.get("name");
+		String username = getLoggedInUsername(model);
 		todo.setUsername(username);
 		todoService.updateTodo(todo);
 		return "redirect:list-todos";
+		
+	}
+	
+	private String getLoggedInUsername(ModelMap model) {
+		// Set up authentication details.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		// From the authentication details we can get the user details.
+		return authentication.getName();
 	}
 }

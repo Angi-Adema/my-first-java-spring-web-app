@@ -1,12 +1,13 @@
 package com.in28minutes.springboot.myfirstwebapp.login;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -21,10 +22,20 @@ public class WelcomeController {
 	// In order to utilize Spring security, we change value="login" to value="/", pass in the ModelMap model into the method and add the model.put line.
 	@RequestMapping(value="/", method = RequestMethod.GET)   // To make this only handle the GET request, we added value= and the , method = RequestMethod.GET. For the POST we add the method below.
 	public String gotoWelcomePage(ModelMap model) {    // For Spring security we changed "loginPage" to gotoWelcomePage.
-		model.put("name", "in28minutes");
+		model.put("name", getLoggedinUsername());    // Instead of having model.put("name", "in28minutes"); change to a call to authentication below.
 		
 		// For Spring security we want to change return "login" to return "welcome" to send them to the welcome page.
 		return "welcome";
+	}
+	
+	// Rather than have the username hard coded in the model, we would rather get this from Spring security:
+	private String getLoggedinUsername() {
+		
+		// Set up authentication details.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		// From the authentication details we can get the user details.
+		return authentication.getName();
 	}
 }
 

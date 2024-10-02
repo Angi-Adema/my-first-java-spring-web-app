@@ -37,6 +37,11 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<!--Spring Boot Validation of user input of the Todos (higher security by coding this within the code rather than front end validation).-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

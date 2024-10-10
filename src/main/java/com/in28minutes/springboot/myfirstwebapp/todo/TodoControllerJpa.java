@@ -20,14 +20,14 @@ import jakarta.validation.Valid;
 public class TodoControllerJpa {
 	
 	//We want to make use of TodoService.
-	private TodoService todoService;
+	// private TodoService todoService;    // Removed this since we are now using todoRepository to render user input from the database rather than hard coded info.
 	
 	// Instead of talking to the TODO static list via TodoService, we want to talk directly to the database. To autowired this in, we have to add it to the constructor below. Once done it is autowired.
 	private TodoRepository todoRepository;
 	
-	public TodoControllerJpa(TodoService todoService, TodoRepository todoRepository) {
+	public TodoControllerJpa(TodoRepository todoRepository) {    // Removed 'TodoService todoService' from constructor since we are now using todoRepository to render data.
 		super();
-		this.todoService = todoService;
+		// this.todoService = todoService;
 		this.todoRepository = todoRepository;
 	}
 
@@ -74,7 +74,15 @@ public class TodoControllerJpa {
 		}
 		
 		String username = getLoggedInUsername(model);
-		todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);   // Removed "LocalDate.now().plusYears(1)" as we do not want to hard code the date, instead pick up user input.
+		
+		// All values below in the .addTodo are being picked up by todoService except for username. Here we add logic to handle this by todoRepository instead.
+		todo.setUsername(username);  // Why are we setting all the values in the Todo Bean? Because the todoRepository does not have any methods that would take all the attributes. Set all values in the todo.
+		todoRepository.save(todo);
+		
+		// todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), false);   // Removed "LocalDate.now().plusYears(1)" as we do not want to hard code the date, instead pick up user input.
+		// We need to utilize the date that the user selected rather than this hard coded value above. Instead we use below:
+		// todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), todo.isDone()); // Since we now are saving all attributes in the todo above, we no longer need this either.
+		
 		return "redirect:list-todos";
 	}
 	
@@ -82,7 +90,10 @@ public class TodoControllerJpa {
 	@RequestMapping("delete-todo")
 	public String deleteTodo(@RequestParam int id) {
 		// Delete TODO with the specific id. Implement this in TodoService class.
-		todoService.deleteById(id);
+		// todoService.deleteById(id);   // No longer need this since it is now being handled by todoRepository.
+		
+		// Refactor this to be handled by todoRepository instead and render data from the database rather than hard coded data.
+		todoRepository.deleteById(id);
 		
 		return "redirect:list-todos";
 		
@@ -91,7 +102,9 @@ public class TodoControllerJpa {
 	// This method brings the user to a page to allow them to update the TODO but is a GET request rather than a POST request that updates the actual TODOs list.
 	@RequestMapping(value="update-todo", method = RequestMethod.GET)
 	public String showUpdateTodoPage(@RequestParam int id, ModelMap model) {
-		Todo todo = todoService.findById(id);
+		// Todo todo = todoService.findById(id);   // No longer need this as we now need to refactor this to be handled by todoRepository to no longer render hard coded data but that of the database.
+		Todo todo = todoRepository.findById(id).get();   // Have to add .get to this.
+		
 		// Now we need to add this to the model, name should match the name given in the todo.jsp.
 		model.addAttribute("todo", todo);
 		return "todo";
@@ -109,8 +122,11 @@ public class TodoControllerJpa {
 		}
 		
 		String username = getLoggedInUsername(model);
+		
 		todo.setUsername(username);
-		todoService.updateTodo(todo);
+		// todoService.updateTodo(todo);   // No longer need this as we are now using todoRepository to render database user input. We user below:
+		todoRepository.save(todo);
+		
 		return "redirect:list-todos";
 		
 	}

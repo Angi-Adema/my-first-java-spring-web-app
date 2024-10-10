@@ -62,7 +62,7 @@ public class SpringSecurityConfiguration {
 		http.authorizeHttpRequests(
 				auth -> auth.anyRequest().authenticated());
 		
-		// We also want to show a logging form.
+		// We also want to show a login form.
 		http.formLogin(withDefaults());
 		
 		// Disable csrf.

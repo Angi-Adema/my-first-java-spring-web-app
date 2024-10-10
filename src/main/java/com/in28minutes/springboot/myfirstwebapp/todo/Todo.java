@@ -2,11 +2,19 @@ package com.in28minutes.springboot.myfirstwebapp.todo;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+// JPA
+// We have the Todo Bean and we want to map it to the database for JPA. (Bean -> Database) we do this by adding the annotation @Entity to the Todo class below. Annotation means it is mapped to a database table.
+
 import jakarta.validation.constraints.Size;
 
 // Where do we store these details? In a database. We will need to create a database.
 // First create a static list of TODOs (TodoService class). Then utilize a database (H2, MySQL)
 
+@Entity  // When you want to map to a different table than the default, just use parenthesis and enter the name (name = "TodoABC"). By default it will use the class name itself.
 public class Todo {
 	// Things we want to store:
 	// id
@@ -15,7 +23,12 @@ public class Todo {
 	// targetDate
 	// whether completed
 
+	// Whenever you have @Entity, a primary key must be identified so we add the annotation of @Id here. We also want to generate using a sequence with @GeneratedValue.
+	@Id
+	@GeneratedValue
 	private int id;
+	
+	// Can also update the names of the columns if you do not want it to default to the term used in the Java code using @Column(name="name").
 	private String username;
 	
 	// Set validation on the description and produce message when the data entered fails this parameter. From Jakarta.validation-api, 

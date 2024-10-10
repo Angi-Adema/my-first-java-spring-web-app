@@ -37,6 +37,11 @@ public class Todo {
 	private String description;
 	private LocalDate targetDate;
 	private boolean done;
+	
+	// Got error about no default constructor so we add it in here.
+	public Todo() {
+		
+	}
 
 	public Todo(int id, String username, String description, LocalDate targetDate, boolean done) {
 		super();

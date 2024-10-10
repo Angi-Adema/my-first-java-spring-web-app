@@ -15,23 +15,31 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jakarta.validation.Valid;
 
-//@Controller   -Commented this out when created TodoControllerJpa.java. It is now completely ignored by the Spring framework.
+@Controller
 @SessionAttributes("name")  // All attributes with the name "name" will be accessible by the Model as well.
-public class TodoController {
+public class TodoControllerJpa {
 	
 	//We want to make use of TodoService.
 	private TodoService todoService;
 	
-	public TodoController(TodoService todoService) {
+	// Instead of talking to the TODO static list via TodoService, we want to talk directly to the database. To autowired this in, we have to add it to the constructor below. Once done it is autowired.
+	private TodoRepository todoRepository;
+	
+	public TodoControllerJpa(TodoService todoService, TodoRepository todoRepository) {
 		super();
 		this.todoService = todoService;
+		this.todoRepository = todoRepository;
 	}
 
 	// URL we want to use for the TODOs is /list-todos
 	@RequestMapping("list-todos")
 	public String listAllTodos(ModelMap model) {
 		String username = getLoggedInUsername(model);  // To remove the hardcoding of the username "in28minutes" we have to get the input name from the model and insert it here.
-		List<Todo> todos = todoService.findByUsername(username);  // Instead of List<todo> todos = todoService.findByUsername("in28minutes").
+		
+		// Look at all the options in the todoRepository. Type in "todoRepository." to see all the options we can do with todoRepository. CRUD functions for example. Use this instead of the findByUsername below.
+		List<Todo> todos = todoRepository.findByUsername(username);
+		
+		// List<Todo> todos = todoService.findByUsername(username);  // Instead of List<Todo> todos = todoService.findByUsername("in28minutes").
 		model.addAttribute("todos", todos);
 		
 		return "listTodos";

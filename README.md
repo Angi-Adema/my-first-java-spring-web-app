@@ -21,3 +21,36 @@ finally executing a MySQL database using a Docker container.
 ## TODOs Page
 
 ![TODOs-page-screenshot](./images/TodosScreenShot.png)
+
+## Technology
+
+- HTML
+- CSS
+- Bootstrap
+- Java
+- Spring / Spring Boot
+- Maven
+- JDBC
+- JPA
+- Hibernate
+- MySQL / MySQL Shell
+- Docker
+
+## Author
+
+Class Instructor: in28minutes - Ranga Karanam
+Project: Angi Adema
+Email: angi.adema@gmail.com
+LinkedIn: https://www.linkedin.com/in/angelaadema/
+
+## Repo Link
+
+GitHub: https://github.com/Angi-Adema/my-first-java-spring-web-app?tab=readme-ov-file
+
+## Future Development
+
+- Add logic so that a user can create their own login credentials and be able to sign in via Google, GitHub or LinkedIn.
+- Add logic to change login credentials once logged in.
+- Update the styling so that the project looks more professional.
+- Functionality to have the app email or text user on upcoming deadlines.
+- Deploy the project so that the app can be accessible from a website.

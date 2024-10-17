@@ -38,9 +38,9 @@ finally executing a MySQL database using a Docker container.
 
 ## Author
 
-Class Instructor: in28minutes - Ranga Karanam
-Project: Angi Adema
-Email: angi.adema@gmail.com
+Class Instructor: in28minutes - Ranga Karanam  
+Project: Angi Adema  
+Email: angi.adema@gmail.com  
 LinkedIn: https://www.linkedin.com/in/angelaadema/
 
 ## Repo Link

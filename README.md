@@ -20,4 +20,4 @@ finally executing a MySQL database using a Docker container.
 
 ## TODOs Page
 
-![TODOs-page-screenshot](./client/images/TodosScreenShot.png)
+![TODOs-page-screenshot](./images/TodosScreenShot.png)

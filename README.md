@@ -53,4 +53,5 @@ GitHub: https://github.com/Angi-Adema/my-first-java-spring-web-app?tab=readme-ov
 - Add logic to change login credentials once logged in.
 - Update the styling so that the project looks more professional.
 - Functionality to have the app email or text user on upcoming deadlines.
+- Write unit tests and include them in this project.
 - Deploy the project so that the app can be accessible from a website.
